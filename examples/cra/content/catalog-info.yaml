@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: ${{ values.name | dump }}
   annotations:
-    github.com/project-slug: ${{ projectSlug }}
+    github.com/project-slug: organization/slug
 spec:
   type: service
   owner: user:guest

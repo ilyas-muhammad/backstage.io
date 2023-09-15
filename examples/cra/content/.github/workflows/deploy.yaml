@@ -1,4 +1,4 @@
-name: Github Action Example
+name: Deploy to staging
 
 on:
   push:
