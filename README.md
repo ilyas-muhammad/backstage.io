@@ -1,6 +1,6 @@
-# [Backstage](https://backstage.io)
+# [Backstage Developer Portals](https://backstage.io)
 
-This is your newly scaffolded Backstage App, Good Luck!
+Developer portals using Backstage App!
 
 To start the app, run:
 
@@ -8,3 +8,9 @@ To start the app, run:
 yarn install
 yarn dev
 ```
+
+## Features
+- create software templates
+- check the dependecy between services
+- CI/CD
+- AWS CDK
