@@ -10,7 +10,7 @@ export class InfraStack extends Stack {
     super(scope, id, props);
 
     const websiteBucket = new s3.Bucket(this, 'ReactBucket', {
-      bucketName: `react-bucket`,
+      bucketName: `react-bucket-${Date.now()}}`,
       publicReadAccess: true,
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
@@ -23,6 +23,13 @@ export class InfraStack extends Stack {
           exposedHeaders: [],
         },
       ],
+      objectOwnership: s3.ObjectOwnership.OBJECT_WRITER,
+      blockPublicAccess: {
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false,
+      },
     });
 
     new s3deploy.BucketDeployment(this, 'DeployWebsite', {
