@@ -1,4 +1,4 @@
-name: Deploy to staging
+name: Deploy to AWS
 
 on:
   push:
@@ -6,9 +6,39 @@ on:
       - 'master'
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Print a greeting
-        run: echo "Hello from Github Actions!"
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      # Install packages
+      - name: Install packages
+        run: npm install
+      # Build project
+      - name: Build project
+        run: npm run build
+
+      # Install Infra Packages
+      - name: Install Infra Packages
+        run: |
+          cd infra/
+          npm install
+
+      # Configure AWS credentials
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: us-east-1
+      # Run cdk
+      - name: Run cdk
+        run: |
+          cd infra/
+          npm run cdk -- deploy --all --require-approval never
